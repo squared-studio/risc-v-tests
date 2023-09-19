@@ -1,0 +1,15 @@
+INST_BASE = 0x0;
+DATA_BASE = 0x0;
+
+SECTIONS
+{
+   . = INST_BASE;
+   .boot   : { *(.boot) }
+   .text   : { *(.text) }
+
+   . = DATA_BASE;
+   .tohost  : { *(.tohost) }
+   .data    : { *(.data) }
+   
+   _end = .;
+}
