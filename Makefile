@@ -10,14 +10,28 @@ CLEAN_TARGET += $(shell find $(realpath .) -name "linker.x")
 
 BUILD_PATH = build/$(TEST)
 
+CFLAGS += -Os
+# CFLAGS += -g3
+CFLAGS += -Wall
+CFLAGS += -Wextra
+CFLAGS += -Wa,-als,-al
+CFLAGS += -mno-save-restore
+CFLAGS += -ffunction-sections
+CFLAGS += -fdata-sections
+CFLAGS += -ffreestanding
+
 .PHONY: build
-build: update_linker
+build: update_linker build/prints.o
 	@mkdir -p $(BUILD_PATH)
-	@riscv64-unknown-elf-gcc -march=rv64g -Wa,-als,-al -c -o $(BUILD_PATH)/$(TEST).o src/$(TEST)
-	@riscv64-unknown-elf-gcc -march=rv64g -nostdlib -nostartfiles -Wl,--no-relax -Wa,-als,-al -Tlinker.x -o $(BUILD_PATH)/$(TEST).elf $(BUILD_PATH)/$(TEST).o
+	@riscv64-unknown-elf-gcc -march=rv64g $(CFLAGS) -c -o $(BUILD_PATH)/$(TEST).o src/$(TEST)
+	@riscv64-unknown-elf-gcc -march=rv64g -nostdlib -nostartfiles -Tlinker.x -o $(BUILD_PATH)/$(TEST).elf $(BUILD_PATH)/$(TEST).o build/prints.o
 	@riscv64-unknown-elf-objcopy -O verilog $(BUILD_PATH)/$(TEST).elf $(BUILD_PATH)/$(TEST).hex
 	@riscv64-unknown-elf-nm $(BUILD_PATH)/$(TEST).elf > $(BUILD_PATH)/$(TEST).sym
 	@riscv64-unknown-elf-objdump -d $(BUILD_PATH)/$(TEST).elf > $(BUILD_PATH)/$(TEST).dump
+
+build/prints.o: prints.c
+	@mkdir -p build
+	@riscv64-unknown-elf-gcc -march=rv64g $(CFLAGS) -c -o build/prints.o prints.c
 
 .PHONY: clean
 clean:
