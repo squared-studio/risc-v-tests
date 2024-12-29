@@ -8,8 +8,10 @@ SECTIONS
    .text   : { *(.text) }
 
    . = DATA_BASE;
-   .tohost  : { *(.tohost) }
+   .rodata  : { *(.rodata) }
    .data    : { *(.data) }
+   .bss     : { *(.bss) }
+   .tohost  : { tohost = .; LONG(0) }
    
    _end = .;
 }

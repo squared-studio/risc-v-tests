@@ -1,5 +1,5 @@
-INST_BASE = 0000000000000000
-DATA_BASE = 0000000010000000
+INST_BASE ?= 0000000020000000
+DATA_BASE ?= 0000000040000000
 
 CLEAN_TARGET += $(shell find $(realpath .) -name "*.dump")
 CLEAN_TARGET += $(shell find $(realpath .) -name "*.elf")
@@ -21,10 +21,10 @@ CFLAGS += -fdata-sections
 CFLAGS += -ffreestanding
 
 .PHONY: build
-build: update_linker build/prints.o
+build: update_linker build/prints.o build/startup.o
 	@mkdir -p $(BUILD_PATH)
 	@riscv64-unknown-elf-gcc -march=rv64g $(CFLAGS) -c -o $(BUILD_PATH)/$(TEST).o src/$(TEST)
-	@riscv64-unknown-elf-gcc -march=rv64g -nostdlib -nostartfiles -Tlinker.x -o $(BUILD_PATH)/$(TEST).elf $(BUILD_PATH)/$(TEST).o build/prints.o
+	@riscv64-unknown-elf-gcc -march=rv64g -nostdlib -nostartfiles -Tlinker.x -o $(BUILD_PATH)/$(TEST).elf $(BUILD_PATH)/$(TEST).o build/prints.o build/startup.o
 	@riscv64-unknown-elf-objcopy -O verilog $(BUILD_PATH)/$(TEST).elf $(BUILD_PATH)/$(TEST).hex
 	@riscv64-unknown-elf-nm $(BUILD_PATH)/$(TEST).elf > $(BUILD_PATH)/$(TEST).sym
 	@riscv64-unknown-elf-objdump -d $(BUILD_PATH)/$(TEST).elf > $(BUILD_PATH)/$(TEST).dump
@@ -32,6 +32,10 @@ build: update_linker build/prints.o
 build/prints.o: prints.c
 	@mkdir -p build
 	@riscv64-unknown-elf-gcc -march=rv64g $(CFLAGS) -c -o build/prints.o prints.c
+
+build/startup.o: startup.s
+	@mkdir -p build
+	@riscv64-unknown-elf-gcc -march=rv64g $(CFLAGS) -c -o build/startup.o startup.s
 
 .PHONY: clean
 clean:
