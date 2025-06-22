@@ -37,27 +37,22 @@ clean:
 
 .PHONY: test
 test: build
-ifeq ($(TOOL_CHAIN),)
-	@echo -e "\033[1;31mTOOL_CHAIN is not set.\033[0m"
-	@echo -e "\033[1;31mPlease set it to your RISC-V toolchain prefix, i.e.:\033[0m"
-	@echo -e "\033[1;31mexport TOOL_CHAIN=riscv64-unknown-elf\033[0m"
-endif
 	@if [ -z ${TEST} ]; then echo -e "\033[1;31mTEST is not set\033[0m"; exit 1; fi
 	@if [ ! -f $(TEST) ]; then echo -e "\033[1;31m$(TEST) does not exist\033[0m"; exit 1; fi
 	@echo -e "\033[1;35mBuilding test... \033[0m"
 	@rm -rf build/${TEST}
 	@mkdir -p build/${TEST}
-	@${TOOL_CHAIN}-gcc -march=rv64g -nostdlib -nostartfiles -o build/${TEST}/elf ${TEST} -T spike.ld
-	@${TOOL_CHAIN}-objcopy -O verilog build/${TEST}/elf build/${TEST}/hex
-	@${TOOL_CHAIN}-nm build/${TEST}/elf > build/${TEST}/sym
-	@${TOOL_CHAIN}-objdump -d build/${TEST}/elf > build/${TEST}/dump
+	@riscv64-unknown-elf-gcc -march=rv64g -nostdlib -nostartfiles -o build/${TEST}/elf ${TEST} -T spike.ld
+	@riscv64-unknown-elf-objcopy -O verilog build/${TEST}/elf build/${TEST}/hex
+	@riscv64-unknown-elf-nm build/${TEST}/elf > build/${TEST}/sym
+	@riscv64-unknown-elf-objdump -d build/${TEST}/elf > build/${TEST}/dump
 	@echo -e "\033[1;35mBuild test complete!\033[0m"
 
 .PHONY: spike
 spike:
 	@make -s test TEST=${TEST}
 	@echo -e "\033[1;35mRunning spike... \033[0m"
-	@spike ${SPIKE_FLAGS} --isa=rv64g --pc=0x40000000 -m0x40000000:0x8000000 build/${TEST}/elf
+	@${SPIKE} ${SPIKE_FLAGS} --isa=rv64g --pc=0x40000000 -m0x40000000:0x8000000 build/${TEST}/elf ${SPIKE_TAIL}
 	@echo -e "\033[1;35mspike run complete!\033[0m"
 
 .PHONY: logo
