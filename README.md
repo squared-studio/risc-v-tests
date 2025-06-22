@@ -13,29 +13,23 @@ This repository contains a collection of RISC-V assembly tests designed to valid
 
 ## Prerequisites
 
-- RISC-V toolchain (e.g., `riscv64-unknown-elf-gcc`)
+- RISC-V GNU Toolchain
 - Spike simulator
 
 ## Usage
 
 ### Building Tests
-
-1. Set the `TOOL_CHAIN` environment variable to your RISC-V toolchain prefix:
-   ```bash
-   export TOOL_CHAIN=riscv64-unknown-elf
-   ```
-
-2. Specify the test file to build using the `TEST` variable and run the `test` target:
-   ```bash
-   make test TEST=rv32i/addi.s
-   ```
+Specify the test file to build using the `TEST` variable and run the `test` target:
+```bash
+make test TEST=rv32i/addi.s
+```
 
 ### Running Tests in Spike
 
-1. Specify the test file to build using the `TEST` variable and run the `spike` target:
-   ```bash
-   make spike TEST=rv32i/addi.s
-   ```
+Specify the test file to build using the `TEST` variable and run the `spike` target:
+```bash
+make spike TEST=rv32i/addi.s
+```
 
 ### Cleaning Build Artifacts
 
