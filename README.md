@@ -1,20 +1,21 @@
 # RISC-V Tests
 
-This repository contains a collection of RISC-V assembly tests designed to validate the functionality of various instructions and features of the RISC-V architecture. It includes tests for both RV32I and RV64I instruction sets, as well as generic tests and templates.
+This repository contains a comprehensive collection of **RISC-V assembly tests** designed to validate the functionality and correctness of various instructions and features across the RISC-V architecture. These tests are particularly useful for verifying RISC-V processor implementations or custom instruction set extensions.
 
 ## Directory Structure
 
-- **`rv32i/`**: Contains tests for the RV32I instruction set.
-- **`rv64i/`**: Contains tests for the RV64I instruction set.
-- **`generic/`**: Contains generic tests.
-- **`build/`**: Directory for build artifacts generated during testing.
-- **`template.s`**: A template file for creating new tests.
-- **`spike.ld`**: Linker script for Spike simulator.
+- **`rv32i/`**: Contains assembly tests specifically for the **RV32I** (32-bit Integer) instruction set.
+- **`rv64i/`**: Contains assembly tests specifically for the **RV64I** (64-bit Integer) instruction set.
+- **`generic/`**: Contains general-purpose tests that are not specific to a particular instruction set extension (e.g., GPR tests, stdout tests).
+- **`build/`**: This directory is used to store all intermediate and final build artifacts, such as compiled executables and log files, generated during the testing process.
+- **`spike.ld`**: The linker script used when compiling tests for execution on the Spike RISC-V ISA simulator. It defines the memory layout and entry point for the test programs.
 
 ## Prerequisites
 
 - RISC-V GNU Toolchain
 - Spike simulator
+
+To run these tests, you will need the RISC-V GNU Toolchain (for assembly and linking) and the Spike RISC-V ISA simulator. You can typically obtain these from the official RISC-V website or your distribution's package manager.
 
 ## Usage
 
@@ -25,6 +26,8 @@ make test TEST=rv32i/addi.s
 ```
 
 ### Running Tests in Spike
+
+To run a specific test on the Spike simulator, provide the relative path to the test file using the `TEST` variable.
 
 Specify the test file to build using the `TEST` variable and run the `spike` target:
 ```bash
