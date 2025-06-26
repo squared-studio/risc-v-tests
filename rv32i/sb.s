@@ -49,61 +49,61 @@ MEM15_WRITE_VALUE: .byte 0xAA
 .section .text
 .global _start
 _start:
-    la t0, MEM08_WRITE_VALUE
+        la      t0,     MEM08_WRITE_VALUE
 
-    li t1,  0
-    sb t1,  0(t0)
+        li      t1,     0
+        sb      t1,     0(t0)
 
-    li t1,  1
-    sb t1,  1(t0)
+        li      t1,     1
+        sb      t1,     1(t0)
 
-    li t1,  2
-    sb t1,  2(t0)
+        li      t1,     2
+        sb      t1,     2(t0)
 
-    li t1,  3
-    sb t1,  3(t0)
+        li      t1,     3
+        sb      t1,     3(t0)
 
-    li t1,  4
-    sb t1,  4(t0)
+        li      t1,     4
+        sb      t1,     4(t0)
 
-    li t1,  5
-    sb t1,  5(t0)
+        li      t1,     5
+        sb      t1,     5(t0)
 
-    li t1,  6
-    sb t1,  6(t0)
+        li      t1,     6
+        sb      t1,     6(t0)
 
-    li t1,  7
-    sb t1,  7(t0)
+        li      t1,     7
+        sb      t1,     7(t0)
 
-    li t1, -1
-    sb t1, -1(t0)
+        li      t1,     -1
+        sb      t1,     -1(t0)
 
-    li t1, -2
-    sb t1, -2(t0)
+        li      t1,     -2
+        sb      t1,     -2(t0)
 
-    li t1, -3
-    sb t1, -3(t0)
+        li      t1,     -3
+        sb      t1,     -3(t0)
 
-    li t1, -4
-    sb t1, -4(t0)
+        li      t1,     -4
+        sb      t1,     -4(t0)
 
-    li t1, -5
-    sb t1, -5(t0)
+        li      t1,     -5
+        sb      t1,     -5(t0)
 
-    li t1, -6
-    sb t1, -6(t0)
+        li      t1,     -6
+        sb      t1,     -6(t0)
 
-    li t1, -7
-    sb t1, -7(t0)
+        li      t1,     -7
+        sb      t1,     -7(t0)
 
-    li t1, -8
-    sb t1, -8(t0)
+        li      t1,     -8
+        sb      t1,     -8(t0)
 
-    fence
-    li a0, 1
-    la t0, tohost
-    sw a0, 0(t0)
-    fence
+        fence
+        li      a0,     1
+        la      t0,     tohost
+        sw      a0,     0(t0)
+        fence
 
 _forever_loop:
-    j _forever_loop
+        j       _forever_loop

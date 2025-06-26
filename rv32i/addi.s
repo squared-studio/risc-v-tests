@@ -12,22 +12,22 @@ fromhost: .dword 0
 .align 3
 .global _start
 _start:
-    addi zero,  zero,   1
-    addi   t1,  zero,  -1
-    addi   t2,    t1,   2
-    addi   t3,  zero,   132
-    addi   t4,  zero,  -133
-    addi   t5,    t4,   134
-    addi   t6,  zero,   1232
+        addi    zero,   zero,   1
+        addi    t1,     zero,   -1
+        addi    t2,     t1,     2
+        addi    t3,     zero,   132
+        addi    t4,     zero,   -133
+        addi    t5,     t4,     134
+        addi    t6,     zero,   1232
 
-    fence
-    addi   a0,  zero,   1
-    la t0, tohost
-    sw a0, 0(t0)
-    fence
+        fence
+        addi    a0,     zero,   1
+        la      t0,     tohost
+        sw      a0,     0(t0)
+        fence
 
 _forever_loop:
-    j _forever_loop
+        j       _forever_loop
 
 .section .rodata
 .align 3

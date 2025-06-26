@@ -12,22 +12,22 @@ fromhost: .dword 0
 .align 3
 .global _start
 _start:
-    call main
+        call    main
 
 .section .text
 .align 3
 _exit:
-    fence
-    slli a0, a0, 1
-    ori  a0, a0, 1
-    la t0, tohost
-    sw a0, 0(t0)
-    fence
+        fence
+        slli    a0,     a0,     1
+        ori     a0,     a0,     1
+        la      t0,     tohost
+        sw      a0,     0(t0)
+        fence
 
 .section .text
 .align 3
 _forever_loop:
-    j _forever_loop
+        j       _forever_loop
 
 .section .rodata
 .align 3
@@ -171,18 +171,18 @@ MEM31_WRITE_VALUE: .byte 0
 
 .section .text
 main:
-    j pass
+        j       pass
 
 .section .text
 pass:
-    addi a0, zero, 0
-    j exit
+        addi    a0,     zero,   0
+        j       exit
 
 .section .text
 fail:
-    addi a0, zero, 1
-    j exit
+        addi    a0,     zero,   1
+        j       exit
 
 .section .text
 exit:
-    ret
+        ret
