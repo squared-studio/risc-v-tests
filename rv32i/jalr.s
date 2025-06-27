@@ -53,8 +53,8 @@ target_label_2_actual:
     # --- Test Completion ---
     fence
     li      a0,     1           # Use 1 to indicate success.
-    la      t1,     tohost
-    sw      a0,     0(t1)
+    la      a1,     tohost
+    sw      a0,     0(a1)
     fence
 
 _forever_loop:
