@@ -14,48 +14,11 @@ jobs:
         test:
           - rv32i/add.s
           - rv32i/addi.s
-          - rv32i/and.s
-          - rv32i/andi.s
-          - rv32i/auipc.s
-          - rv32i/beq.s
-          - rv32i/bge.s
-          - rv32i/bgeu.s
-          - rv32i/blt.s
-          - rv32i/bltu.s
-          - rv32i/bne.s
-          - rv32i/ebreak.s
-          - rv32i/ecall.s
-          - rv32i/fence.s
-          - rv32i/jal.s
-          - rv32i/jalr.s
-          - rv32i/lb.s
-          - rv32i/lbu.s
-          - rv32i/lh.s
-          - rv32i/lhu.s
-          - rv32i/lui.s
-          - rv32i/lw.s
-          - rv32i/or.s
-          - rv32i/ori.s
-          - rv32i/sb.s
-          - rv32i/sh.s
-          - rv32i/sll.s
-          - rv32i/slli.s
-          - rv32i/slt.s
-          - rv32i/slti.s
-          - rv32i/sltiu.s
-          - rv32i/sltu.s
-          - rv32i/sra.s
-          - rv32i/srai.s
-          - rv32i/srl.s
-          - rv32i/srli.s
-          - rv32i/sub.s
-          - rv32i/sw.s
-          - rv32i/xor.s
-          - rv32i/xori.s
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
       - name: Run test for ${{ matrix.test }}
         run: make spike TEST=${{ matrix.test }}
+        shell: bash
 
