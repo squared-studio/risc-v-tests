@@ -8,8 +8,7 @@ on:
 
 jobs:
   regression-tests:
-    runs-on: [make]
-    # runs-on: [make, spike]
+    runs-on: [make, spike]
     strategy:
       matrix:
         test:
@@ -58,6 +57,5 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
       - name: Run test for ${{ matrix.test }}
-        run: echo "make spike TEST=${{ matrix.test }}"
-        # run: make spike TEST=${{ matrix.test }}
+        run: make spike TEST=${{ matrix.test }}
 

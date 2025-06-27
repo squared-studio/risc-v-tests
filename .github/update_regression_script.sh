@@ -12,8 +12,7 @@ echo "    branches: [ \"main\" ]"                                 >> ./.github/w
 echo ""                                                           >> ./.github/workflows/run-regression.yml
 echo "jobs:"                                                      >> ./.github/workflows/run-regression.yml
 echo "  regression-tests:"                                        >> ./.github/workflows/run-regression.yml
-echo "    runs-on: [make]"                                        >> ./.github/workflows/run-regression.yml
-echo "    # runs-on: [make, spike]"                               >> ./.github/workflows/run-regression.yml
+echo "    runs-on: [make, spike]"                                 >> ./.github/workflows/run-regression.yml
 echo "    strategy:"                                              >> ./.github/workflows/run-regression.yml
 echo "      matrix:"                                              >> ./.github/workflows/run-regression.yml
 echo "        test:"                                              >> ./.github/workflows/run-regression.yml
@@ -33,8 +32,7 @@ echo "    steps:"                                                 >> ./.github/w
 echo "      - name: Checkout repository"                          >> ./.github/workflows/run-regression.yml
 echo "        uses: actions/checkout@v3"                          >> ./.github/workflows/run-regression.yml
 echo "      - name: Run test for \${{ matrix.test }}"             >> ./.github/workflows/run-regression.yml
-echo "        run: echo \"make spike TEST=\${{ matrix.test }}\""  >> ./.github/workflows/run-regression.yml
-echo "        # run: make spike TEST=\${{ matrix.test }}"         >> ./.github/workflows/run-regression.yml
+echo "        run: make spike TEST=\${{ matrix.test }}"           >> ./.github/workflows/run-regression.yml
 echo ""                                                           >> ./.github/workflows/run-regression.yml
 
 echo -e "\033[1;32mDone\033[0m"
