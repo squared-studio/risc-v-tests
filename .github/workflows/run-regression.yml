@@ -7,23 +7,32 @@ on:
     branches: [ "main" ]
 
 jobs:
+  discover-tests:
+    runs-on: ubuntu-latest
+    outputs:
+      tests: ${{ steps.set-matrix.outputs.tests }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+      - id: set-matrix
+        name: Discover tests
+        run: |
+          TEST_LIST=$(find generic rv32i rv64i -mindepth 1 -maxdepth 1 | jq -R . | jq -s .)
+          echo "tests=${TEST_LIST}" >> $GITHUB_OUTPUT
+
   regression-tests:
+    needs: discover-tests
     runs-on: [make]
     # runs-on: [make, spike]
     strategy:
+      fail-fast: false
       matrix:
-        test:
-          - generic/test1
-          - generic/test2
-          - rv32i/test1
-          - rv32i/test2
-          - rv64i/test1
-          - rv64i/test2
+        test: ${{ fromJson(needs.discover-tests.outputs.tests) }}
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
-      - name: Run test for ${{ matrix.test }}
+      - name: ${{ matrix.test }}
         run: echo "make spike TEST=${{ matrix.test }}"
         # run: make spike TEST=${{ matrix.test }}
 
