@@ -25,7 +25,6 @@ jobs:
     runs-on: [make]
     # runs-on: [make, spike]
     strategy:
-      fail-fast: false
       matrix:
         test: ${{ fromJson(needs.discover-tests.outputs.tests) }}
 
