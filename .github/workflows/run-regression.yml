@@ -1,0 +1,24 @@
+name: Run Regression Tests
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  regression-tests:
+    runs-on: [make]
+    # runs-on: [make, spike]
+    strategy:
+      matrix:
+        test: ${{ fromJson(format('["{0}"]', join('","', github.workspace + '/generic/*', github.workspace + '/rv32i/*', github.workspace + '/rv64i/*'))) }}
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+      - name: Run test for ${{ matrix.test }}
+        run: echo "make spike TEST=${{ matrix.test }}"
+        # run: make spike TEST=${{ matrix.test }}
+
+
