@@ -52,7 +52,7 @@ test: build
 spike:
 	@make -s test TEST=${TEST}
 	@echo -e "\033[1;35mRunning spike... \033[0m"
-	@${SPIKE} ${SPIKE_FLAGS} --isa=rv64g --pc=0x40000000 -m0x40000000:0x8000000 build/${TEST}/elf ${SPIKE_TAIL}
+	@${SPIKE} ${SPIKE_FLAGS} --isa=rv64g --pc=0x80000000 -m0x80000000:0x8000000 build/${TEST}/elf ${SPIKE_TAIL}
 	@echo -e "\033[1;35mspike run complete!\033[0m"
 
 .PHONY: logo
