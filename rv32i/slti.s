@@ -53,20 +53,35 @@ _start:
     slti    t6,     a0,     -10
 
     # Test case 8: Zero comparison
-    # t28 = (0 < 5) ? 1 : 0 = 1
+    # gp = (0 < 5) ? 1 : 0 = 1
     li      a0,     0
-    slti    t28,    a0,     5
+    slti    gp,     a0,     5
 
     # Test case 9: Zero comparison (negative)
-    # t29 = (-5 < 0) ? 1 : 0 = 1
+    # tp = (-5 < 0) ? 1 : 0 = 1
     li      a0,     -5
-    slti    t29,    a0,     0
+    slti    tp,     a0,     0
+
+    # Test case 10: Max immediate value
+    # s0 = (2046 < 2047) ? 1 : 0 = 1
+    li      a0,     2046
+    slti    s0,     a0,     2047
+
+    # Test case 11: Min immediate value (not less than)
+    # s1 = (-2047 < -2048) ? 1 : 0 = 0
+    li      a0,     -2047
+    slti    s1,     a0,     -2048
+
+    # Test case 12: Min immediate value (less than)
+    # s2 = (-2049 < -2048) ? 1 : 0 = 1
+    li      a0,     -2049
+    slti    s2,     a0,     -2048
 
     # --- Test Completion ---
     fence
     li      a0,     1
-    la      t0,     tohost
-    sw      a0,     0(t0)
+    la      t1,     tohost
+    sw      a0,     0(t1)
     fence
 
 _forever_loop:
@@ -82,5 +97,8 @@ GPR28_FINAL_VALUE: .dword 1         # t3 (x28)
 GPR29_FINAL_VALUE: .dword 0         # t4 (x29)
 GPR30_FINAL_VALUE: .dword 1         # t5 (x30)
 GPR31_FINAL_VALUE: .dword 0         # t6 (x31)
-GPR03_FINAL_VALUE: .dword 1         # t28 (x3)
-GPR04_FINAL_VALUE: .dword 1         # t29 (x4)
+GPR03_FINAL_VALUE: .dword 1         # gp (x3)
+GPR04_FINAL_VALUE: .dword 1         # tp (x4)
+GPR08_FINAL_VALUE: .dword 1         # s0 (x8)
+GPR09_FINAL_VALUE: .dword 0         # s1 (x9)
+GPR18_FINAL_VALUE: .dword 1         # s2 (x18)
