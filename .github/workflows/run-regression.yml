@@ -12,7 +12,13 @@ jobs:
     # runs-on: [make, spike]
     strategy:
       matrix:
-        test: ${{ fromJson(format('["{0}"]', join('","', github.workspace + '/generic/*', github.workspace + '/rv32i/*', github.workspace + '/rv64i/*'))) }}
+        test:
+          - generic/test1
+          - generic/test2
+          - rv32i/test1
+          - rv32i/test2
+          - rv64i/test1
+          - rv64i/test2
 
     steps:
       - name: Checkout repository
