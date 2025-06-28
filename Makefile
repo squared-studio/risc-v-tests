@@ -4,6 +4,10 @@ SHELL := /bin/bash
 
 DEBUG ?= 0
 
+MARCH ?= rv64g
+
+MABI ?= lp64
+
 ifeq ($(DEBUG), 1)
 	SPIKE_FLAGS += -d
 	LOG_FLASG :=
@@ -44,17 +48,17 @@ test: build
 	@echo -e "\033[1;35mBuilding test... \033[0m"
 	@rm -rf build/${TEST}
 	@mkdir -p build/${TEST}
-	@riscv64-unknown-elf-gcc -march=rv64g -nostdlib -nostartfiles -o build/${TEST}/elf ${TEST} -T spike.ld 2>&1 | tee build/${TEST}/log
-	@riscv64-unknown-elf-objcopy -O verilog build/${TEST}/elf build/${TEST}/hex
-	@riscv64-unknown-elf-nm build/${TEST}/elf > build/${TEST}/sym
-	@riscv64-unknown-elf-objdump -d build/${TEST}/elf > build/${TEST}/dump
+	@riscv64-elf-gcc -march=$(MARCH) -mabi=$(MABI) -nostdlib -nostartfiles -o build/${TEST}/elf ${TEST} -T spike.ld 2>&1 | tee build/${TEST}/log
+	@riscv64-elf-objcopy -O verilog build/${TEST}/elf build/${TEST}/hex
+	@riscv64-elf-nm build/${TEST}/elf > build/${TEST}/sym
+	@riscv64-elf-objdump -d build/${TEST}/elf > build/${TEST}/dump
 	@echo -e "\033[1;35mBuild test complete!\033[0m"
 
 .PHONY: spike
 spike:
 	@make -s test TEST=${TEST}
 	@echo -e "\033[1;35mRunning spike... \033[0m"
-	@${SPIKE} ${SPIKE_FLAGS} --isa=rv64g --pc=0x80000000 -m0x80000000:0x8000000 build/${TEST}/elf ${SPIKE_TAIL} ${LOG_FLASG}
+	@${SPIKE} ${SPIKE_FLAGS} --isa=$(MARCH) --pc=0x800000000 -m0x800000000:0x8000000 build/${TEST}/elf ${SPIKE_TAIL} ${LOG_FLASG}
 	@echo -e "\033[1;35mspike run complete!\033[0m"
 	@cat build/${TEST}/spike >> build/${TEST}/log || echo ""
 	@rm -rf build/${TEST}/spike
