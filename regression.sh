@@ -1,27 +1,35 @@
 #!/bin/bash
 
-clear;
+start_time=$(date +%s)
+clear
 make -s logo
+echo -n -e " $(date +%x\ %H:%M:%S) ---- \033[1;33mCLEANING UP TEMPORATY FILES... \033[0m"
+make -s clean > /dev/null 2>&1
+end_time=$(date +%s)
+time_diff=$((end_time - start_time))
+printf "\033[22G%3ds\n" "$time_diff"
 
-make -s clean
 
 TEST=""
 TEST="$TEST $(find generic -type f)"
-# TEST="$TEST $(find rv32i -type f)"
+TEST="$TEST $(find rv32i -type f)"
 TEST="$TEST $(find rv64i -type f)"
 
 for test in $TEST; do
-    echo "Running test: $test"
-    make -s spike TEST="$test"
+    start_time=$(date +%s)
+    echo -n -e " $(date +%x\ %H:%M:%S) ---- \033[1;33mRunning test: $test... \033[0m"
+    timeout 30s make -s spike TEST="$test" &> /dev/null
+    end_time=$(date +%s)
+    time_diff=$((end_time - start_time))
+    printf "\033[22G%3ds\n" "$time_diff"
 done
-
-clear
-make -s logo
 
 rm -rf temp_regression_issues
 
 grep --include "log" -irw "error" >> temp_regression_issues ./build
 grep --include "log" -irw "*** FAILED ***" >> temp_regression_issues ./build
+
+find ./build -type f -name "spike" | sed "s/\/spike/ TIMEDOUT/g" | sed "s/\.\\/build\///g" >> temp_regression_issues
 
 cat temp_regression_issues
 

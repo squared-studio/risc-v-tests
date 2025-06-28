@@ -60,16 +60,16 @@ _start:
     slt     t6,     a0,     a1
 
     # Test case 8: Zero comparison (negative)
-    # t28 = (-5 < 0) ? 1 : 0 = 1
+    # t3 = (-5 < 0) ? 1 : 0 = 1
     li      a0,     -5
     li      a1,     0
-    slt     t28,    a0,     a1
+    slt     t3,    a0,     a1
 
     # --- Test Completion ---
     fence
     li      a0,     1
-    la      t0,     tohost
-    sw      a0,     0(t0)
+    la      a1,     tohost
+    sw      a0,     0(a1)
     fence
 
 _forever_loop:
