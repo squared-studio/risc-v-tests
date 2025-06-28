@@ -7,8 +7,8 @@ make -s clean
 
 TEST=""
 TEST="$TEST $(find generic -type f)"
-# TEST="$TEST $(find rv32i -type f)"
-# TEST="$TEST $(find rv64i -type f)"
+TEST="$TEST $(find rv32i -type f)"
+TEST="$TEST $(find rv64i -type f)"
 
 for test in $TEST; do
     echo "Running test: $test"
