@@ -17,8 +17,3 @@ jobs:
       shell: bash
       run: |
         bash ./regression.sh
-
-    # - name: Fail if Simulation Contains Fails
-    #   shell: bash
-    #   run: |
-    #     [[ -s temp_ci_issues ]] && exit 1 || exit 0

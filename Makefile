@@ -34,7 +34,7 @@ build:
 .PHONY: clean
 clean:
 	@echo -e -n "\033[3;35mCleaning build... \033[0m"
-	@rm -rf build
+	@rm -rf build temp_regression_issues
 	@echo -e "\033[3;32mDone!\033[0m"
 
 .PHONY: test
