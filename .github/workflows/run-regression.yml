@@ -7,12 +7,18 @@ on:
     branches: [ "main" ]
 
 jobs:
-  regression-tests:
+  regression:
     runs-on: [make, spike]
 
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3
-      - name: Regression Tests
-        run: ./regression.sh
+    - uses: actions/checkout@v4
 
+    - name: Simulate
+      shell: bash
+      run: |
+        bash ./regression.sh
+
+    # - name: Fail if Simulation Contains Fails
+    #   shell: bash
+    #   run: |
+    #     [[ -s temp_ci_issues ]] && exit 1 || exit 0
