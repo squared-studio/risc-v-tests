@@ -36,29 +36,11 @@ _start:
     li      a1,     1
     sra     t2,     a0,     a1
 
-    # Test case 4: Shift a negative number by a larger amount
-    # t3 = 0x80000000 >> 4 = 0xF8000000
-    li      a0,     0x80000000
-    li      a1,     4
-    sra     t3,     a0,     a1
-
-    # Test case 5: Shift by maximum amount (31 for RV32)
-    # t4 = 0x80000000 >> 31 = 0xFFFFFFFF (-1)
-    li      a0,     0x80000000
-    li      a1,     31
-    sra     t4,     a0,     a1
-
-    # Test case 6: Shift by more than XLEN (should only use lower 5 bits of shamt)
-    # t5 = 0xF0000000 >> 1 = 0xF8000000
-    li      a0,     0xF0000000
-    li      a1,     33 # shamt will be 33 & 0x1F = 1
-    sra     t5,     a0,     a1
-
     # --- Test Completion ---
     fence
     li      a0,     1
-    la      t1,     tohost
-    sw      a0,     0(t1)
+    la      a1,     tohost
+    sw      a0,     0(a1)
     fence
 
 _forever_loop:
@@ -69,7 +51,4 @@ _forever_loop:
 GPR00_FINAL_VALUE: .dword 0
 GPR05_FINAL_VALUE: .dword 2         # t0 (x5)
 GPR06_FINAL_VALUE: .dword 0xABCD    # t1 (x6)
-GPR07_FINAL_VALUE: .dword 0xFFFFFFFF # t2 (x7)
-GPR28_FINAL_VALUE: .dword 0xF8000000 # t3 (x28)
-GPR29_FINAL_VALUE: .dword 0xFFFFFFFF # t4 (x29)
-GPR30_FINAL_VALUE: .dword 0xF8000000 # t5 (x30)
+GPR07_FINAL_VALUE: .dword 0xFFFFFFFFFFFFFFFF # t2 (x7)

@@ -41,17 +41,17 @@ _start:
     ori     t3,     a0,     0x0F
 
     # Test case 5: ORI with immediate that clears bits (not possible with OR, but for completeness)
-    # t4 = 0xAAAA | 0x5555 = 0xFFFF
+    # t4 = 0xAAAA | 0x555 = 0xAFFF
     li      a0,     0xAAAA
     ori     t4,     a0,     0x555   # 0x555 is 0b010101010101
                                     # 0xAAAA is 0b1010101010101010
-                                    # Result: 0xAFBF (0b1010111110111111)
+                                    # Result: 0x000000000000AFFF (0b1010111111111111)
 
     # --- Test Completion ---
     fence
     li      a0,     1
-    la      t0,     tohost
-    sw      a0,     0(t0)
+    la      a1,     tohost
+    sw      a0,     0(a1)
     fence
 
 _forever_loop:
@@ -59,9 +59,9 @@ _forever_loop:
 
 .section .rodata
 .align 3
-GPR00_FINAL_VALUE: .dword 0
-GPR05_FINAL_VALUE: .dword 14        # t0 (x5)
-GPR06_FINAL_VALUE: .dword 0xABCD    # t1 (x6)
-GPR07_FINAL_VALUE: .dword 0xFFFFFFFF # t2 (x7)
-GPR28_FINAL_VALUE: .dword 0xFFFFFFFF # t3 (x28)
-GPR29_FINAL_VALUE: .dword 0xAFBF    # t4 (x29)
+GPR00_FINAL_VALUE: .dword 0x0000000000000000
+GPR05_FINAL_VALUE: .dword 0x000000000000000E # t0 (x5)
+GPR06_FINAL_VALUE: .dword 0x000000000000ABCD # t1 (x6)
+GPR07_FINAL_VALUE: .dword 0xFFFFFFFFFFFFFFFF # t2 (x7)
+GPR28_FINAL_VALUE: .dword 0xFFFFFFFFFFFFFFFF # t3 (x28)
+GPR29_FINAL_VALUE: .dword 0x000000000000AFFF # t4 (x29)

@@ -42,15 +42,15 @@ _start:
     xori    t3,     a0,     0x0F
 
     # Test case 5: XORI to flip specific bits
-    # t4 = 0xAAAA ^ 0x555 = 0xF5F
+    # t4 = 0xAAAA ^ 0x555 = 0xAFFF
     li      a0,     0xAAAA
     xori    t4,     a0,     0x555
 
     # --- Test Completion ---
     fence
     li      a0,     1
-    la      t1,     tohost
-    sw      a0,     0(t1)
+    la      a1,     tohost
+    sw      a0,     0(a1)
     fence
 
 _forever_loop:
@@ -61,6 +61,6 @@ _forever_loop:
 GPR00_FINAL_VALUE: .dword 0
 GPR05_FINAL_VALUE: .dword 12        # t0 (x5)
 GPR06_FINAL_VALUE: .dword 0xABCD    # t1 (x6)
-GPR07_FINAL_VALUE: .dword 0xEDCBA987 # t2 (x7)
+GPR07_FINAL_VALUE: .dword 0xFFFFFFFFEDCBA987 # t2 (x7)
 GPR28_FINAL_VALUE: .dword -7        # t3 (x28)
-GPR29_FINAL_VALUE: .dword 0xF5F     # t4 (x29)
+GPR29_FINAL_VALUE: .dword 0xAFFF     # t4 (x29)

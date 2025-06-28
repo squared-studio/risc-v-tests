@@ -45,7 +45,7 @@ _start:
     # t4 = -10 | -5
     # -10 = 0xFFFFFFF6
     # -5  = 0xFFFFFFFB
-    # OR  = 0xFFFFFFFB (-5)
+    # OR  = 0xFFFFFFFF (-1)
     li      a0,     -10
     li      a1,     -5
     or      t4,     a0,     a1
@@ -53,8 +53,8 @@ _start:
     # --- Test Completion ---
     fence
     li      a0,     1
-    la      t0,     tohost
-    sw      a0,     0(t0)
+    la      a1,     tohost
+    sw      a0,     0(a1)
     fence
 
 _forever_loop:
@@ -62,9 +62,9 @@ _forever_loop:
 
 .section .rodata
 .align 3
-GPR00_FINAL_VALUE: .dword 0
-GPR05_FINAL_VALUE: .dword 14        # t0 (x5)
-GPR06_FINAL_VALUE: .dword 0xABCD    # t1 (x6)
-GPR07_FINAL_VALUE: .dword 0xFFFFFFFF # t2 (x7)
-GPR28_FINAL_VALUE: .dword 0x5555    # t3 (x28)
-GPR29_FINAL_VALUE: .dword 0xFFFFFFFB # t4 (x29)
+GPR00_FINAL_VALUE: .dword 0x0000000000000000
+GPR05_FINAL_VALUE: .dword 0x000000000000000E # t0 (x5)
+GPR06_FINAL_VALUE: .dword 0x000000000000ABCD # t1 (x6)
+GPR07_FINAL_VALUE: .dword 0xFFFFFFFFFFFFFFFF # t2 (x7)
+GPR28_FINAL_VALUE: .dword 0x0000000000005555 # t3 (x28)
+GPR29_FINAL_VALUE: .dword 0xFFFFFFFFFFFFFFFF # t4 (x29)

@@ -91,7 +91,7 @@ _start:
     # Signal success to the host. Note that x30 and x31 are used here
     # and then immediately overwritten with their final test values.
     fence
-    li   x30, 1         # Use x30 to hold the success code (1).
+    li   x30, 3         # Use x30 to hold the success code (1).
     la   x31, tohost    # Use x31 to hold the tohost address.
     sw   x30, 0(x31)    # Write success code to tohost.
 

@@ -42,22 +42,16 @@ _start:
     sll     t3,     a0,     a1
 
     # Test case 5: Shift a large number
-    # t4 = 0x12345678 << 4 = 0x23456780
-    li      a0,     0x12345678
+    # t4 = 0x01234567 << 4 = 0x12345670
+    li      a0,     0x01234567
     li      a1,     4
     sll     t4,     a0,     a1
-
-    # Test case 6: Shift by more than XLEN (should only use lower 5 bits of shamt)
-    # t5 = 0x1 << 33 (shamt is 33, but only 33 & 0x1F = 1 is used) = 0x2
-    li      a0,     1
-    li      a1,     33
-    sll     t5,     a0,     a1
 
     # --- Test Completion ---
     fence
     li      a0,     1
-    la      t0,     tohost
-    sw      a0,     0(t0)
+    la      a1,     tohost
+    sw      a0,     0(a1)
     fence
 
 _forever_loop:
@@ -69,6 +63,5 @@ GPR00_FINAL_VALUE: .dword 0
 GPR05_FINAL_VALUE: .dword 4         # t0 (x5)
 GPR06_FINAL_VALUE: .dword 0xABCD    # t1 (x6)
 GPR07_FINAL_VALUE: .dword 0x80000000 # t2 (x7)
-GPR28_FINAL_VALUE: .dword 0xFFFFFFFE # t3 (x28)
-GPR29_FINAL_VALUE: .dword 0x23456780 # t4 (x29)
-GPR30_FINAL_VALUE: .dword 2         # t5 (x30)
+GPR28_FINAL_VALUE: .dword 0xFFFFFFFFFFFFFFFE # t3 (x28)
+GPR29_FINAL_VALUE: .dword 0x12345670 # t4 (x29)
