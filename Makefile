@@ -8,12 +8,6 @@ MARCH ?= rv64g
 
 MABI ?= lp64
 
-ARCH_32_64 := $(shell echo "$(MABI)" | sed "s/.*32.*/32/g" | sed "s/.*64.*/64/g")
-
-ifeq ($(ARCH_32_64), 64)
-	GCC_DEFINE += -DRV64
-endif
-
 SPIKE_FLAGS += -l --log-commits
 ifeq ($(DEBUG), 1)
 	SPIKE_FLAGS += -d
@@ -54,7 +48,7 @@ test: build
 	@echo -e "\033[1;35mBuilding test... \033[0m"
 	@rm -rf build/${TEST}
 	@mkdir -p build/${TEST}
-	@${RISCV64_GCC} -march=$(MARCH) -mabi=$(MABI) -nostdlib -nostartfiles $(GCC_DEFINE) -o build/${TEST}/elf ${TEST} -T spike.ld 2>&1 | tee build/${TEST}/log
+	@${RISCV64_GCC} -march=$(MARCH) -mabi=$(MABI) -nostdlib -nostartfiles -o build/${TEST}/elf ${TEST} -T spike.ld 2>&1 | tee build/${TEST}/log
 	@${RISCV64_OBJCOPY} -O verilog build/${TEST}/elf build/${TEST}/hex
 	@${RISCV64_NM} build/${TEST}/elf > build/${TEST}/sym
 	@${RISCV64_OBJDUMP} -d build/${TEST}/elf > build/${TEST}/dump

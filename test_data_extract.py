@@ -60,7 +60,10 @@ for addr in list(mem.keys()):
 OUTPUT_STRING = ""
 CNT = 0
 for i in range(TEST_DATA_BEGIN, TEST_DATA_END):
-  OUTPUT_STRING += f"{mem[i]}"
+  try:
+    OUTPUT_STRING += f"{mem[i]}"
+  except KeyError:
+    OUTPUT_STRING += f"00"
   if CNT == 15:
     OUTPUT_STRING += f"\n"
     CNT = 0
