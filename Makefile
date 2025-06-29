@@ -8,11 +8,11 @@ MARCH ?= rv64g
 
 MABI ?= lp64
 
+SPIKE_FLAGS += -l --log-commits
 ifeq ($(DEBUG), 1)
 	SPIKE_FLAGS += -d
 	LOG_FLASG :=
 else
-	SPIKE_FLAGS += -l
 	LOG_FLASG := 2>&1 | tee build/${TEST}/spike
 endif
 
@@ -48,10 +48,10 @@ test: build
 	@echo -e "\033[1;35mBuilding test... \033[0m"
 	@rm -rf build/${TEST}
 	@mkdir -p build/${TEST}
-	@riscv64-elf-gcc -march=$(MARCH) -mabi=$(MABI) -nostdlib -nostartfiles -o build/${TEST}/elf ${TEST} -T spike.ld 2>&1 | tee build/${TEST}/log
-	@riscv64-elf-objcopy -O verilog build/${TEST}/elf build/${TEST}/hex
-	@riscv64-elf-nm build/${TEST}/elf > build/${TEST}/sym
-	@riscv64-elf-objdump -d build/${TEST}/elf > build/${TEST}/dump
+	@${RISCV64_GCC} -march=$(MARCH) -mabi=$(MABI) -nostdlib -nostartfiles -o build/${TEST}/elf ${TEST} -T spike.ld 2>&1 | tee build/${TEST}/log
+	@${RISCV64_OBJCOPY} -O verilog build/${TEST}/elf build/${TEST}/hex
+	@${RISCV64_NM} build/${TEST}/elf > build/${TEST}/sym
+	@${RISCV64_OBJDUMP} -d build/${TEST}/elf > build/${TEST}/dump
 	@echo -e "\033[1;35mBuild test complete!\033[0m"
 
 .PHONY: spike
