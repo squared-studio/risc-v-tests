@@ -48,7 +48,7 @@ test: build
 	@echo -e "\033[1;35mBuilding test... \033[0m"
 	@rm -rf build/${TEST}
 	@mkdir -p build/${TEST}
-	@${RISCV64_GCC} -march=$(MARCH) -mabi=$(MABI) -nostdlib -nostartfiles -o build/${TEST}/elf ${TEST} -T spike.ld 2>&1 | tee build/${TEST}/log
+	@${RISCV64_GCC} -march=$(MARCH) -mabi=$(MABI) -nostdlib -nostartfiles -I include -o build/${TEST}/elf ${TEST} -T spike.ld 2>&1 | tee build/${TEST}/log
 	@${RISCV64_OBJCOPY} -O verilog build/${TEST}/elf build/${TEST}/hex
 	@${RISCV64_NM} build/${TEST}/elf > build/${TEST}/sym
 	@${RISCV64_OBJDUMP} -d build/${TEST}/elf > build/${TEST}/dump
@@ -60,10 +60,12 @@ spike:
 	@echo -e "\033[1;35mRunning spike... \033[0m"
 	@${SPIKE} ${SPIKE_FLAGS} --isa=$(MARCH) --pc=0x800000000 -m0x800000000:0x8000000 build/${TEST}/elf ${LOG_FLASG}
 	@echo -e "\033[1;35mspike run complete!\033[0m"
-	@cat build/${TEST}/spike >> build/${TEST}/log || echo ""
-	@cat build/${TEST}/spike | grep ") mem 0x" | sed "s/.*mem 0x/@/g"> build/${TEST}/mem_writes
+	@cat build/${TEST}/spike >> build/${TEST}/log || echo -n ""
+	@cat build/${TEST}/spike | grep ") mem 0x" | sed "s/.*mem 0x/@/g"> build/${TEST}/mem_writes || echo -n ""
 	@python ./test_data_extract.py -t ${TEST}
 	@rm -rf build/${TEST}/spike
+	@mkdir -p artifact/${TEST}
+	@cp -f build/${TEST}/test_data artifact/${TEST}/${MARCH} || echo -e "\033[1;31mbuild/${TEST}/test_data does not exist\033[0m"
 
 
 .PHONY: logo
