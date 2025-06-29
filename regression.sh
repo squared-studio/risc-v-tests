@@ -9,11 +9,10 @@ end_time=$(date +%s)
 time_diff=$((end_time - start_time))
 printf "\033[22G%3ds\n" "$time_diff"
 
-
 TEST=""
-TEST="$TEST $(find generic -type f)"
-TEST="$TEST $(find rv32i -type f)"
-TEST="$TEST $(find rv64i -type f)"
+TEST="$TEST $(find generic -type f -name '*.S')"
+TEST="$TEST $(find rv32i -type f -name '*.S')"
+TEST="$TEST $(find rv64i -type f -name '*.S')"
 
 for test in $TEST; do
     start_time=$(date +%s)
