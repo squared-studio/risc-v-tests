@@ -64,8 +64,8 @@ spike:
 	@cat build/${TEST}/spike | grep ") mem 0x" | sed "s/.*mem 0x/@/g"> build/${TEST}/mem_writes || echo -n ""
 	@python ./test_data_extract.py -t ${TEST}
 	@rm -rf build/${TEST}/spike
-	@mkdir -p artifact/${TEST}
-	@cp -f build/${TEST}/test_data artifact/${TEST}/${MARCH} || echo -e "\033[1;31mbuild/${TEST}/test_data does not exist\033[0m"
+	@mkdir -p test_data/${TEST}
+	@cp -f build/${TEST}/test_data test_data/${TEST}/${MARCH} || echo -e "\033[1;31mbuild/${TEST}/test_data does not exist\033[0m"
 
 
 .PHONY: logo
