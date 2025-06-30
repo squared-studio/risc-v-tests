@@ -3,8 +3,15 @@
 #  This is a template for a RISC-V instruction test.
 #  Author: Name (email)
 #
+#  This file is part of squared-studio:maverickOne
+#  Copyright (c) 2025 squared-studio
+#  Licensed under the MIT License
+#  See LICENSE file in the project root for full license information
+#
 ################################################################################
 
+# This header file provides macros and definitions for bare-metal RISC-V
+# assembly tests, primarily for use in simulation environments like Spike.
 #include "ss_riscv_asm.S"
 
 ################################################################################
