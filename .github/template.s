@@ -3,8 +3,8 @@
 #  This is a template for a RISC-V instruction test.
 #  Author: Name (email)
 #
-#  This file is part of squared-studio:maverickOne
-#  Copyright (c) 2025 squared-studio
+#  This file is part of squared-studio:risc-v-tests
+#  Copyright (c) YYYY squared-studio
 #  Licensed under the MIT License
 #  See LICENSE file in the project root for full license information
 #

@@ -17,17 +17,20 @@ else
 endif
 
 .PHONY: help
-help:
-	@echo  ""
+help: logo
 	@echo -e "\033[1;32mAvailable targets:\033[0m"
-	@echo -e "\033[1;33m  clean :\033[0m Removes the build directory and its contents."
+	@echo -e "\033[1;33m  help  :\033[0m Displays this help message."
 	@echo -e "\033[1;33m  test  :\033[0m Builds the test specified by the TEST variable."
-	@echo -e "\033[1;33m  spike :\033[0m Runs the Spike simulator on the built test."
-	@echo  ""
+	@echo -e "\033[1;33m  spike :\033[0m Compile and run test on Spike simulator."
+	@echo -e "\033[1;33m  code  :\033[0m Opens a test file, creating it from a template if it doesn't exist."
+	@echo -e "\033[1;33m  clean :\033[0m Removes the build directory and its contents."
+	@echo ""
 	@echo -e "\033[1;32mVariables:\033[0m"
-	@echo -e "\033[1;33m  DEBUG :\033[0m Set to 1 to enable debug mode for Spike. Default is 0."
-	@echo -e "\033[1;33m  TEST  :\033[0m Name of the test file to build and run. Must be set before running test or spike."
-	@echo  ""
+	@echo -e "\033[1;33m  TEST  :\033[0m Path to the test file. Must be set for 'test', 'spike', and 'code'."
+	@echo -e "\033[1;33m  MARCH :\033[0m Target RISC-V architecture (e.g., rv32i, rv64g). Default: '$(MARCH)'."
+	@echo -e "\033[1;33m  MABI  :\033[0m Target ABI (e.g., ilp32, lp64). Default: '$(MABI)'."
+	@echo -e "\033[1;33m  DEBUG :\033[0m Set to 1 to enable Spike's interactive debug mode. Default: 0."
+	@echo ""
 
 build:
 	@echo -e -n "\033[3;35mCreating build directory... \033[0m"
@@ -53,6 +56,16 @@ test: build
 	@${RISCV64_NM} build/${TEST}/elf > build/${TEST}/sym
 	@${RISCV64_OBJDUMP} -d build/${TEST}/elf > build/${TEST}/dump
 	@echo -e "\033[1;35mBuild test complete!\033[0m"
+
+.PHONY: code
+code:
+	@if [ ! -f $(TEST) ]; then \
+		mkdir -p $(shell echo "${TEST}" | sed "s/\/[^\/]*$$//g"); \
+		cp .github/template.s ${TEST}; \
+		sed -i "s/#  Author: Name (email)/#  Author: $(shell git config user.name) ($(shell git config user.email))/g" ${TEST}; \
+		sed -i "s/#  Copyright (c) YYYY squared-studio/#  Copyright (c) $(shell date +%Y) squared-studio/g" ${TEST}; \
+	fi
+	@code ${TEST}
 
 .PHONY: spike
 spike:

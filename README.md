@@ -4,10 +4,11 @@ This repository contains a comprehensive collection of **RISC-V assembly tests**
 
 ## Directory Structure
 
+- **`build/`**: This directory is used to store all intermediate and final build artifacts, such as compiled executables and log files, generated during the testing process.
+- **`generic/`**: Contains general-purpose tests that are not specific to a particular instruction set extension (e.g., GPR tests, stdout tests).
 - **`rv32i/`**: Contains assembly tests specifically for the **RV32I** (32-bit Integer) instruction set.
 - **`rv64i/`**: Contains assembly tests specifically for the **RV64I** (64-bit Integer) instruction set.
-- **`generic/`**: Contains general-purpose tests that are not specific to a particular instruction set extension (e.g., GPR tests, stdout tests).
-- **`build/`**: This directory is used to store all intermediate and final build artifacts, such as compiled executables and log files, generated during the testing process.
+- **`test_data/`**: Stores extracted data from test runs, organized by test and architecture. This data can be used for regression checking or further analysis.
 - **`spike.ld`**: The linker script used when compiling tests for execution on the Spike RISC-V ISA simulator. It defines the memory layout and entry point for the test programs.
 
 ## Prerequisites
@@ -19,7 +20,9 @@ To run these tests, you will need the RISC-V GNU Toolchain (for assembly and lin
 
 ## Usage
 
-### Building Tests
+All commands are run via `make`. You can see a full list of commands and customizable variables by running `make help`.
+
+### Building a Test
 Specify the test file to build using the `TEST` variable and run the `test` target:
 ```bash
 make test TEST=rv32i/addi.s

@@ -1,9 +1,21 @@
-# This is a test for the RISC-V 'addi' (Add Immediate) instruction.
-# It executes a series of 'addi' operations with various immediate values
-# and register combinations, storing the results in a dedicated data section.
-# The test passes if the program completes successfully. A verification script
-# would typically check the stored results against expected values.
+################################################################################
+#
+#  This is a test for the RISC-V 'addi' (Add Immediate) instruction.
+#  It executes a series of 'addi' operations with various immediate values
+#  and register combinations, storing the results in a dedicated data section.
+#  The test passes if the program completes successfully. A verification script
+#  would typically check the stored results against expected values.
+#  Author: Foez Ahmed (foez.official@gmail.com)
+#
+#  This file is part of squared-studio:risc-v-tests
+#  Copyright (c) 2025 squared-studio
+#  Licensed under the MIT License
+#  See LICENSE file in the project root for full license information
+#
+################################################################################
 
+# This header file provides macros and definitions for bare-metal RISC-V
+# assembly tests, primarily for use in simulation environments like Spike.
 #include "ss_riscv_asm.S"
 
 # STORE_X31: A macro to store the value of a register to the memory location
