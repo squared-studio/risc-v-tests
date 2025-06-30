@@ -38,6 +38,10 @@
         addi    RD,     RS,     IMM;    \
         STORE_X31(RD);
 
+################################################################################
+# Program Entry Point
+################################################################################
+
 _start:
         # Initialize x31 (t6) to be the pointer to the results data area.
         la      x31,    TEST_DATA_BEGIN
@@ -90,10 +94,15 @@ _start:
         ADDI (x7, x7, 3);
 
 # Undefine the local macro to prevent accidental use later.
+#undef ADDI
 #undef STORE_X31
 
         # Exit the test with a success code (0).
         EXIT(0)
+
+################################################################################
+# Data section for storing test results.
+################################################################################
 
 # Data section for storing test results.
 .section .data

@@ -51,4 +51,12 @@ fromhost: .word 0
         li      t0,     CODE;           \
         EXIT_R(t0);
 
+# PREPROCESSOR_RANDOM: A macro for generating a psudo-random number.
+#define PREPROCESSOR_RANDOM ((((((((((((((((((((__LINE__ * __LINE__ * __LINE__) \
+        * __LINE__ / 3) * __LINE__ / 5) * __LINE__ / 7) * __LINE__ / 11)        \
+        * __LINE__ / 13) * __LINE__ / 17) * __LINE__ / 19) * __LINE__ / 23)     \
+        * __LINE__ / 29) * __LINE__ / 31) * __LINE__ / 37) * __LINE__ / 41)     \
+        * __LINE__ ) * __LINE__ ) * __LINE__ ) * __LINE__ ) * __LINE__ )        \
+        * __LINE__ ) * __LINE__ )
+
 #endif
