@@ -62,9 +62,8 @@ fromhost: .word 0
 # macro is invoked in the code.
 
 # RAND8: Generates a pseudo-random 8-bit value.
-#define RAND8 (((__LINE__ * 255) *      \
-        ((__COUNTER__ % 31) * 255))     \
-        & 0x0FF)
+#define RAND8 (((__LINE__ * 453 + 4534) * (__COUNTER__ * 786 + 843)) & 0x0FF)
+
 
 # RAND16: Generates a pseudo-random 16-bit value by concatenating two
 # different 8-bit random values.
@@ -77,6 +76,10 @@ fromhost: .word 0
 # RAND64: Generates a pseudo-random 64-bit value by concatenating two
 # different 32-bit random values.
 #define RAND64 (RAND32 << 32 | RAND32)
+
+# RAND128: Generates a pseudo-random 128-bit value by concatenating two
+# different 64-bit random values.
+#define RAND128 (RAND64 << 64 | RAND64)
 
 # RANDIMM: Generates a pseudo-random 12-bit immediate value suitable for
 # I-type instructions. It uses the `%lo` assembler relocation function

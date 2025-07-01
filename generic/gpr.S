@@ -14,6 +14,10 @@
 # assembly tests, primarily for use in simulation environments like Spike.
 #include "ss_riscv_asm.S"
 
+################################################################################
+# Macro Define : Local macro defination
+################################################################################
+
 # Macros to write a register's value to memory, conditionally compiled for
 # 32-bit (RV32) or 64-bit (RV64) architectures.
 #if __riscv_xlen == 64
@@ -62,26 +66,26 @@ _start:
         # Test each of the lower 16 General Purpose Registers (x0-x15).
         # Note: x0 is hardwired to zero, so `li x0, ...` is a no-op. The test
         # will correctly store 0.
-        GPR_TEST_LO(x0);  GPR_TEST_LO(x0);  GPR_TEST_LO(x0);  GPR_TEST_LO(x0); 
-        GPR_TEST_LO(x0);  GPR_TEST_LO(x0);  GPR_TEST_LO(x0);  GPR_TEST_LO(x0); 
-        GPR_TEST_LO(x1);  GPR_TEST_LO(x1);  GPR_TEST_LO(x1);  GPR_TEST_LO(x1); 
-        GPR_TEST_LO(x1);  GPR_TEST_LO(x1);  GPR_TEST_LO(x1);  GPR_TEST_LO(x1); 
-        GPR_TEST_LO(x2);  GPR_TEST_LO(x2);  GPR_TEST_LO(x2);  GPR_TEST_LO(x2); 
-        GPR_TEST_LO(x2);  GPR_TEST_LO(x2);  GPR_TEST_LO(x2);  GPR_TEST_LO(x2); 
-        GPR_TEST_LO(x3);  GPR_TEST_LO(x3);  GPR_TEST_LO(x3);  GPR_TEST_LO(x3); 
-        GPR_TEST_LO(x3);  GPR_TEST_LO(x3);  GPR_TEST_LO(x3);  GPR_TEST_LO(x3); 
-        GPR_TEST_LO(x4);  GPR_TEST_LO(x4);  GPR_TEST_LO(x4);  GPR_TEST_LO(x4); 
-        GPR_TEST_LO(x4);  GPR_TEST_LO(x4);  GPR_TEST_LO(x4);  GPR_TEST_LO(x4); 
-        GPR_TEST_LO(x5);  GPR_TEST_LO(x5);  GPR_TEST_LO(x5);  GPR_TEST_LO(x5); 
-        GPR_TEST_LO(x5);  GPR_TEST_LO(x5);  GPR_TEST_LO(x5);  GPR_TEST_LO(x5); 
-        GPR_TEST_LO(x6);  GPR_TEST_LO(x6);  GPR_TEST_LO(x6);  GPR_TEST_LO(x6); 
-        GPR_TEST_LO(x6);  GPR_TEST_LO(x6);  GPR_TEST_LO(x6);  GPR_TEST_LO(x6); 
-        GPR_TEST_LO(x7);  GPR_TEST_LO(x7);  GPR_TEST_LO(x7);  GPR_TEST_LO(x7); 
-        GPR_TEST_LO(x7);  GPR_TEST_LO(x7);  GPR_TEST_LO(x7);  GPR_TEST_LO(x7); 
-        GPR_TEST_LO(x8);  GPR_TEST_LO(x8);  GPR_TEST_LO(x8);  GPR_TEST_LO(x8); 
-        GPR_TEST_LO(x8);  GPR_TEST_LO(x8);  GPR_TEST_LO(x8);  GPR_TEST_LO(x8); 
-        GPR_TEST_LO(x9);  GPR_TEST_LO(x9);  GPR_TEST_LO(x9);  GPR_TEST_LO(x9); 
-        GPR_TEST_LO(x9);  GPR_TEST_LO(x9);  GPR_TEST_LO(x9);  GPR_TEST_LO(x9); 
+        GPR_TEST_LO(x0);  GPR_TEST_LO(x0);  GPR_TEST_LO(x0);  GPR_TEST_LO(x0);
+        GPR_TEST_LO(x0);  GPR_TEST_LO(x0);  GPR_TEST_LO(x0);  GPR_TEST_LO(x0);
+        GPR_TEST_LO(x1);  GPR_TEST_LO(x1);  GPR_TEST_LO(x1);  GPR_TEST_LO(x1);
+        GPR_TEST_LO(x1);  GPR_TEST_LO(x1);  GPR_TEST_LO(x1);  GPR_TEST_LO(x1);
+        GPR_TEST_LO(x2);  GPR_TEST_LO(x2);  GPR_TEST_LO(x2);  GPR_TEST_LO(x2);
+        GPR_TEST_LO(x2);  GPR_TEST_LO(x2);  GPR_TEST_LO(x2);  GPR_TEST_LO(x2);
+        GPR_TEST_LO(x3);  GPR_TEST_LO(x3);  GPR_TEST_LO(x3);  GPR_TEST_LO(x3);
+        GPR_TEST_LO(x3);  GPR_TEST_LO(x3);  GPR_TEST_LO(x3);  GPR_TEST_LO(x3);
+        GPR_TEST_LO(x4);  GPR_TEST_LO(x4);  GPR_TEST_LO(x4);  GPR_TEST_LO(x4);
+        GPR_TEST_LO(x4);  GPR_TEST_LO(x4);  GPR_TEST_LO(x4);  GPR_TEST_LO(x4);
+        GPR_TEST_LO(x5);  GPR_TEST_LO(x5);  GPR_TEST_LO(x5);  GPR_TEST_LO(x5);
+        GPR_TEST_LO(x5);  GPR_TEST_LO(x5);  GPR_TEST_LO(x5);  GPR_TEST_LO(x5);
+        GPR_TEST_LO(x6);  GPR_TEST_LO(x6);  GPR_TEST_LO(x6);  GPR_TEST_LO(x6);
+        GPR_TEST_LO(x6);  GPR_TEST_LO(x6);  GPR_TEST_LO(x6);  GPR_TEST_LO(x6);
+        GPR_TEST_LO(x7);  GPR_TEST_LO(x7);  GPR_TEST_LO(x7);  GPR_TEST_LO(x7);
+        GPR_TEST_LO(x7);  GPR_TEST_LO(x7);  GPR_TEST_LO(x7);  GPR_TEST_LO(x7);
+        GPR_TEST_LO(x8);  GPR_TEST_LO(x8);  GPR_TEST_LO(x8);  GPR_TEST_LO(x8);
+        GPR_TEST_LO(x8);  GPR_TEST_LO(x8);  GPR_TEST_LO(x8);  GPR_TEST_LO(x8);
+        GPR_TEST_LO(x9);  GPR_TEST_LO(x9);  GPR_TEST_LO(x9);  GPR_TEST_LO(x9);
+        GPR_TEST_LO(x9);  GPR_TEST_LO(x9);  GPR_TEST_LO(x9);  GPR_TEST_LO(x9);
         GPR_TEST_LO(x10); GPR_TEST_LO(x10); GPR_TEST_LO(x10); GPR_TEST_LO(x10);
         GPR_TEST_LO(x10); GPR_TEST_LO(x10); GPR_TEST_LO(x10); GPR_TEST_LO(x10);
         GPR_TEST_LO(x11); GPR_TEST_LO(x11); GPR_TEST_LO(x11); GPR_TEST_LO(x11);
@@ -134,14 +138,17 @@ _start:
         GPR_TEST_HI(x31); GPR_TEST_HI(x31); GPR_TEST_HI(x31); GPR_TEST_HI(x31);
         GPR_TEST_HI(x31); GPR_TEST_HI(x31); GPR_TEST_HI(x31); GPR_TEST_HI(x31);
 
-# Undefining local macros to avoid accidental resue.
+        # Terminate the simulation. The exit code (0) indicates success.
+        EXIT(0)
+
+################################################################################
+# Macro Undefine : Undefine the local macro to prevent accidental use later.
+################################################################################
+
 #undef WR_HI
 #undef WR_LO
 #undef GPR_TEST_LO
 #undef GPR_TEST_HI
-
-        # Terminate the simulation. The exit code (0) indicates success.
-        EXIT(0)
 
 ################################################################################
 # Data section for storing test results.

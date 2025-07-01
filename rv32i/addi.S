@@ -18,6 +18,10 @@
 # assembly tests, primarily for use in simulation environments like Spike.
 #include "ss_riscv_asm.S"
 
+################################################################################
+# Macro Define : Local macro defination 
+################################################################################
+
 # STORE_X31: A macro to store the value of a register to the memory location
 # pointed to by x31, and then increment the x31 pointer. This is used to
 # save the result of each test case. It's conditionally compiled for RV32
@@ -138,6 +142,13 @@ _start:
 
         # Exit the test with a success code (0).
         EXIT(0)
+
+################################################################################
+# Macro Undefine : Undefine the local macro to prevent accidental use later.
+################################################################################
+
+#undef ADDI
+#undef STORE_X31
 
 ################################################################################
 # Data section for storing test results.
