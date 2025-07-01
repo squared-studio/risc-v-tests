@@ -165,9 +165,9 @@ _start:
 TEST_DATA_BEGIN:
 # Reserve space for the results of the lower 16 GPRs (x0-x15).
 LOWER_REGS:
-    .zero __riscv_xlen / 8 * 16 * 8
+  .zero __riscv_xlen / 8 * 16 * 8
 # Reserve space for the results of the upper 16 GPRs (x16-x31).
 UPPER_REGS:
-    .zero __riscv_xlen / 8 * 16 * 8
+  .zero __riscv_xlen / 8 * 16 * 8
 # Symbol marking the end of the data region.
 TEST_DATA_END:

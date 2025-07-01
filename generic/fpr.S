@@ -281,6 +281,6 @@ LOAD_DATA_BEGIN:
 
 # Symbol marking the beginning of the data region to be extracted.
 TEST_DATA_BEGIN:
-    .zero __riscv_flen / 8 * 256
+  .zero __riscv_flen / 8 * 256
 TEST_DATA_END:
 

@@ -80,5 +80,5 @@ exit:
 .align 3
 # Reserve space for test results. Adjust the size as needed for your test.
 TEST_DATA_BEGIN:
-    .zero __riscv_xlen / 8 * 4
+  .zero __riscv_xlen / 8 * 4
 TEST_DATA_END:

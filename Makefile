@@ -70,6 +70,7 @@ code:
 .PHONY: spike
 spike:
 	@make -s test TEST=${TEST}
+	@cat build/${TEST}/sym
 	@echo -e "\033[1;35mRunning spike... \033[0m"
 	@${SPIKE} ${SPIKE_FLAGS} --isa=$(MARCH) --pc=0x800000000 -m0x800000000:0x8000000 build/${TEST}/elf ${LOG_FLASG}
 	@echo -e "\033[1;35mspike run complete!\033[0m"

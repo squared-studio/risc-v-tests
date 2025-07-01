@@ -160,5 +160,5 @@ _start:
 # Reserve space for 140 test results. The size of each result depends on
 # the architecture's word length (__riscv_xlen).
 TEST_DATA_BEGIN:
-    .zero __riscv_xlen / 8 * 140
+  .zero __riscv_xlen / 8 * 140
 TEST_DATA_END:
