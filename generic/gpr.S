@@ -39,14 +39,14 @@
 # It loads a pseudo-random immediate value into the register and then writes
 # that value to the memory region pointed to by x31.
 #define GPR_TEST_LO(REG)                        \
-        li      REG,    PREPROCESSOR_RANDOM;    \
+        li      REG,    RAND;                   \
         WR_HI(REG);
 
 # Macro to test an upper-half GPR (x16-x31).
 # It loads a pseudo-random immediate value into the register and then writes
 # that value to the memory region pointed to by x15.
 #define GPR_TEST_HI(REG)                        \
-        li      REG,    PREPROCESSOR_RANDOM;    \
+        li      REG,    RAND;                   \
         WR_LO(REG);
 
 ################################################################################
@@ -62,22 +62,38 @@ _start:
         # Test each of the lower 16 General Purpose Registers (x0-x15).
         # Note: x0 is hardwired to zero, so `li x0, ...` is a no-op. The test
         # will correctly store 0.
-        GPR_TEST_LO(x0);
-        GPR_TEST_LO(x1);
-        GPR_TEST_LO(x2);
-        GPR_TEST_LO(x3);
-        GPR_TEST_LO(x4);
-        GPR_TEST_LO(x5);
-        GPR_TEST_LO(x6);
-        GPR_TEST_LO(x7);
-        GPR_TEST_LO(x8);
-        GPR_TEST_LO(x9);
-        GPR_TEST_LO(x10);
-        GPR_TEST_LO(x11);
-        GPR_TEST_LO(x12);
-        GPR_TEST_LO(x13);
-        GPR_TEST_LO(x14);
-        GPR_TEST_LO(x15);
+        GPR_TEST_LO(x0);  GPR_TEST_LO(x0);  GPR_TEST_LO(x0);  GPR_TEST_LO(x0); 
+        GPR_TEST_LO(x0);  GPR_TEST_LO(x0);  GPR_TEST_LO(x0);  GPR_TEST_LO(x0); 
+        GPR_TEST_LO(x1);  GPR_TEST_LO(x1);  GPR_TEST_LO(x1);  GPR_TEST_LO(x1); 
+        GPR_TEST_LO(x1);  GPR_TEST_LO(x1);  GPR_TEST_LO(x1);  GPR_TEST_LO(x1); 
+        GPR_TEST_LO(x2);  GPR_TEST_LO(x2);  GPR_TEST_LO(x2);  GPR_TEST_LO(x2); 
+        GPR_TEST_LO(x2);  GPR_TEST_LO(x2);  GPR_TEST_LO(x2);  GPR_TEST_LO(x2); 
+        GPR_TEST_LO(x3);  GPR_TEST_LO(x3);  GPR_TEST_LO(x3);  GPR_TEST_LO(x3); 
+        GPR_TEST_LO(x3);  GPR_TEST_LO(x3);  GPR_TEST_LO(x3);  GPR_TEST_LO(x3); 
+        GPR_TEST_LO(x4);  GPR_TEST_LO(x4);  GPR_TEST_LO(x4);  GPR_TEST_LO(x4); 
+        GPR_TEST_LO(x4);  GPR_TEST_LO(x4);  GPR_TEST_LO(x4);  GPR_TEST_LO(x4); 
+        GPR_TEST_LO(x5);  GPR_TEST_LO(x5);  GPR_TEST_LO(x5);  GPR_TEST_LO(x5); 
+        GPR_TEST_LO(x5);  GPR_TEST_LO(x5);  GPR_TEST_LO(x5);  GPR_TEST_LO(x5); 
+        GPR_TEST_LO(x6);  GPR_TEST_LO(x6);  GPR_TEST_LO(x6);  GPR_TEST_LO(x6); 
+        GPR_TEST_LO(x6);  GPR_TEST_LO(x6);  GPR_TEST_LO(x6);  GPR_TEST_LO(x6); 
+        GPR_TEST_LO(x7);  GPR_TEST_LO(x7);  GPR_TEST_LO(x7);  GPR_TEST_LO(x7); 
+        GPR_TEST_LO(x7);  GPR_TEST_LO(x7);  GPR_TEST_LO(x7);  GPR_TEST_LO(x7); 
+        GPR_TEST_LO(x8);  GPR_TEST_LO(x8);  GPR_TEST_LO(x8);  GPR_TEST_LO(x8); 
+        GPR_TEST_LO(x8);  GPR_TEST_LO(x8);  GPR_TEST_LO(x8);  GPR_TEST_LO(x8); 
+        GPR_TEST_LO(x9);  GPR_TEST_LO(x9);  GPR_TEST_LO(x9);  GPR_TEST_LO(x9); 
+        GPR_TEST_LO(x9);  GPR_TEST_LO(x9);  GPR_TEST_LO(x9);  GPR_TEST_LO(x9); 
+        GPR_TEST_LO(x10); GPR_TEST_LO(x10); GPR_TEST_LO(x10); GPR_TEST_LO(x10);
+        GPR_TEST_LO(x10); GPR_TEST_LO(x10); GPR_TEST_LO(x10); GPR_TEST_LO(x10);
+        GPR_TEST_LO(x11); GPR_TEST_LO(x11); GPR_TEST_LO(x11); GPR_TEST_LO(x11);
+        GPR_TEST_LO(x11); GPR_TEST_LO(x11); GPR_TEST_LO(x11); GPR_TEST_LO(x11);
+        GPR_TEST_LO(x12); GPR_TEST_LO(x12); GPR_TEST_LO(x12); GPR_TEST_LO(x12);
+        GPR_TEST_LO(x12); GPR_TEST_LO(x12); GPR_TEST_LO(x12); GPR_TEST_LO(x12);
+        GPR_TEST_LO(x13); GPR_TEST_LO(x13); GPR_TEST_LO(x13); GPR_TEST_LO(x13);
+        GPR_TEST_LO(x13); GPR_TEST_LO(x13); GPR_TEST_LO(x13); GPR_TEST_LO(x13);
+        GPR_TEST_LO(x14); GPR_TEST_LO(x14); GPR_TEST_LO(x14); GPR_TEST_LO(x14);
+        GPR_TEST_LO(x14); GPR_TEST_LO(x14); GPR_TEST_LO(x14); GPR_TEST_LO(x14);
+        GPR_TEST_LO(x15); GPR_TEST_LO(x15); GPR_TEST_LO(x15); GPR_TEST_LO(x15);
+        GPR_TEST_LO(x15); GPR_TEST_LO(x15); GPR_TEST_LO(x15); GPR_TEST_LO(x15);
 
         # Load the base address of the memory region for upper registers
         # (x16-x31) into x15. x15 will be used as a pointer to store the test
@@ -85,22 +101,38 @@ _start:
         la      x15,    UPPER_REGS
 
         # Test each of the upper 16 General Purpose Registers (x16-x31).
-        GPR_TEST_HI(x16);
-        GPR_TEST_HI(x17);
-        GPR_TEST_HI(x18);
-        GPR_TEST_HI(x19);
-        GPR_TEST_HI(x20);
-        GPR_TEST_HI(x21);
-        GPR_TEST_HI(x22);
-        GPR_TEST_HI(x23);
-        GPR_TEST_HI(x24);
-        GPR_TEST_HI(x25);
-        GPR_TEST_HI(x26);
-        GPR_TEST_HI(x27);
-        GPR_TEST_HI(x28);
-        GPR_TEST_HI(x29);
-        GPR_TEST_HI(x30);
-        GPR_TEST_HI(x31);
+        GPR_TEST_HI(x16); GPR_TEST_HI(x16); GPR_TEST_HI(x16); GPR_TEST_HI(x16);
+        GPR_TEST_HI(x16); GPR_TEST_HI(x16); GPR_TEST_HI(x16); GPR_TEST_HI(x16);
+        GPR_TEST_HI(x17); GPR_TEST_HI(x17); GPR_TEST_HI(x17); GPR_TEST_HI(x17);
+        GPR_TEST_HI(x17); GPR_TEST_HI(x17); GPR_TEST_HI(x17); GPR_TEST_HI(x17);
+        GPR_TEST_HI(x18); GPR_TEST_HI(x18); GPR_TEST_HI(x18); GPR_TEST_HI(x18);
+        GPR_TEST_HI(x18); GPR_TEST_HI(x18); GPR_TEST_HI(x18); GPR_TEST_HI(x18);
+        GPR_TEST_HI(x19); GPR_TEST_HI(x19); GPR_TEST_HI(x19); GPR_TEST_HI(x19);
+        GPR_TEST_HI(x19); GPR_TEST_HI(x19); GPR_TEST_HI(x19); GPR_TEST_HI(x19);
+        GPR_TEST_HI(x20); GPR_TEST_HI(x20); GPR_TEST_HI(x20); GPR_TEST_HI(x20);
+        GPR_TEST_HI(x20); GPR_TEST_HI(x20); GPR_TEST_HI(x20); GPR_TEST_HI(x20);
+        GPR_TEST_HI(x21); GPR_TEST_HI(x21); GPR_TEST_HI(x21); GPR_TEST_HI(x21);
+        GPR_TEST_HI(x21); GPR_TEST_HI(x21); GPR_TEST_HI(x21); GPR_TEST_HI(x21);
+        GPR_TEST_HI(x22); GPR_TEST_HI(x22); GPR_TEST_HI(x22); GPR_TEST_HI(x22);
+        GPR_TEST_HI(x22); GPR_TEST_HI(x22); GPR_TEST_HI(x22); GPR_TEST_HI(x22);
+        GPR_TEST_HI(x23); GPR_TEST_HI(x23); GPR_TEST_HI(x23); GPR_TEST_HI(x23);
+        GPR_TEST_HI(x23); GPR_TEST_HI(x23); GPR_TEST_HI(x23); GPR_TEST_HI(x23);
+        GPR_TEST_HI(x24); GPR_TEST_HI(x24); GPR_TEST_HI(x24); GPR_TEST_HI(x24);
+        GPR_TEST_HI(x24); GPR_TEST_HI(x24); GPR_TEST_HI(x24); GPR_TEST_HI(x24);
+        GPR_TEST_HI(x25); GPR_TEST_HI(x25); GPR_TEST_HI(x25); GPR_TEST_HI(x25);
+        GPR_TEST_HI(x25); GPR_TEST_HI(x25); GPR_TEST_HI(x25); GPR_TEST_HI(x25);
+        GPR_TEST_HI(x26); GPR_TEST_HI(x26); GPR_TEST_HI(x26); GPR_TEST_HI(x26);
+        GPR_TEST_HI(x26); GPR_TEST_HI(x26); GPR_TEST_HI(x26); GPR_TEST_HI(x26);
+        GPR_TEST_HI(x27); GPR_TEST_HI(x27); GPR_TEST_HI(x27); GPR_TEST_HI(x27);
+        GPR_TEST_HI(x27); GPR_TEST_HI(x27); GPR_TEST_HI(x27); GPR_TEST_HI(x27);
+        GPR_TEST_HI(x28); GPR_TEST_HI(x28); GPR_TEST_HI(x28); GPR_TEST_HI(x28);
+        GPR_TEST_HI(x28); GPR_TEST_HI(x28); GPR_TEST_HI(x28); GPR_TEST_HI(x28);
+        GPR_TEST_HI(x29); GPR_TEST_HI(x29); GPR_TEST_HI(x29); GPR_TEST_HI(x29);
+        GPR_TEST_HI(x29); GPR_TEST_HI(x29); GPR_TEST_HI(x29); GPR_TEST_HI(x29);
+        GPR_TEST_HI(x30); GPR_TEST_HI(x30); GPR_TEST_HI(x30); GPR_TEST_HI(x30);
+        GPR_TEST_HI(x30); GPR_TEST_HI(x30); GPR_TEST_HI(x30); GPR_TEST_HI(x30);
+        GPR_TEST_HI(x31); GPR_TEST_HI(x31); GPR_TEST_HI(x31); GPR_TEST_HI(x31);
+        GPR_TEST_HI(x31); GPR_TEST_HI(x31); GPR_TEST_HI(x31); GPR_TEST_HI(x31);
 
 # Undefining local macros to avoid accidental resue.
 #undef WR_HI
@@ -126,9 +158,9 @@ _start:
 TEST_DATA_BEGIN:
 # Reserve space for the results of the lower 16 GPRs (x0-x15).
 LOWER_REGS:
-    .zero __riscv_xlen / 8 * 16
+    .zero __riscv_xlen / 8 * 16 * 8
 # Reserve space for the results of the upper 16 GPRs (x16-x31).
 UPPER_REGS:
-    .zero __riscv_xlen / 8 * 16
+    .zero __riscv_xlen / 8 * 16 * 8
 # Symbol marking the end of the data region.
 TEST_DATA_END:

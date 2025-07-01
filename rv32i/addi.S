@@ -93,6 +93,45 @@ _start:
         ADDI (x7, x7, 3);
         ADDI (x7, x7, 3);
 
+        # Random Test
+        ADDI (x7, x7, RANDIMM); ADDI (x7, x7, RANDIMM); ADDI (x7, x7, RANDIMM);
+        ADDI (x7, x7, RANDIMM); ADDI (x7, x7, RANDIMM); ADDI (x7, x7, RANDIMM);
+        ADDI (x7, x7, RANDIMM); ADDI (x7, x7, RANDIMM); ADDI (x7, x7, RANDIMM);
+        ADDI (x7, x7, RANDIMM); ADDI (x7, x7, RANDIMM); ADDI (x7, x7, RANDIMM);
+        ADDI (x7, x7, RANDIMM); ADDI (x7, x7, RANDIMM); ADDI (x7, x7, RANDIMM);
+        ADDI (x7, x7, RANDIMM); ADDI (x7, x7, RANDIMM); ADDI (x7, x7, RANDIMM);
+        ADDI (x7, x7, RANDIMM); ADDI (x7, x7, RANDIMM); ADDI (x7, x7, RANDIMM);
+        ADDI (x7, x7, RANDIMM); ADDI (x7, x7, RANDIMM); ADDI (x7, x7, RANDIMM);
+        ADDI (x7, x7, RANDIMM); ADDI (x7, x7, RANDIMM); ADDI (x7, x7, RANDIMM);
+        ADDI (x7, x7, RANDIMM); ADDI (x7, x7, RANDIMM); ADDI (x7, x7, RANDIMM);
+        ADDI (x7, x7, RANDIMM); ADDI (x7, x7, RANDIMM); ADDI (x7, x7, RANDIMM);
+        ADDI (x7, x7, RANDIMM); ADDI (x7, x7, RANDIMM); ADDI (x7, x7, RANDIMM);
+        ADDI (x7, x7, RANDIMM); ADDI (x7, x7, RANDIMM); ADDI (x7, x7, RANDIMM);
+        ADDI (x7, x7, RANDIMM); ADDI (x7, x7, RANDIMM); ADDI (x7, x7, RANDIMM);
+        ADDI (x7, x7, RANDIMM); ADDI (x7, x7, RANDIMM); ADDI (x7, x7, RANDIMM);
+        ADDI (x7, x7, RANDIMM); ADDI (x7, x7, RANDIMM); ADDI (x7, x7, RANDIMM);
+        ADDI (x7, x7, RANDIMM); ADDI (x7, x7, RANDIMM); ADDI (x7, x7, RANDIMM);
+        ADDI (x7, x7, RANDIMM); ADDI (x7, x7, RANDIMM); ADDI (x7, x7, RANDIMM);
+        ADDI (x7, x7, RANDIMM); ADDI (x7, x7, RANDIMM); ADDI (x7, x7, RANDIMM);
+        ADDI (x7, x7, RANDIMM); ADDI (x7, x7, RANDIMM); ADDI (x7, x7, RANDIMM);
+        ADDI (x7, x7, RANDIMM); ADDI (x7, x7, RANDIMM); ADDI (x7, x7, RANDIMM);
+        ADDI (x7, x7, RANDIMM); ADDI (x7, x7, RANDIMM); ADDI (x7, x7, RANDIMM);
+        ADDI (x7, x7, RANDIMM); ADDI (x7, x7, RANDIMM); ADDI (x7, x7, RANDIMM);
+        ADDI (x7, x7, RANDIMM); ADDI (x7, x7, RANDIMM); ADDI (x7, x7, RANDIMM);
+        ADDI (x7, x7, RANDIMM); ADDI (x7, x7, RANDIMM); ADDI (x7, x7, RANDIMM);
+        ADDI (x7, x7, RANDIMM); ADDI (x7, x7, RANDIMM); ADDI (x7, x7, RANDIMM);
+        ADDI (x7, x7, RANDIMM); ADDI (x7, x7, RANDIMM); ADDI (x7, x7, RANDIMM);
+        ADDI (x7, x7, RANDIMM); ADDI (x7, x7, RANDIMM); ADDI (x7, x7, RANDIMM);
+        ADDI (x7, x7, RANDIMM); ADDI (x7, x7, RANDIMM); ADDI (x7, x7, RANDIMM);
+        ADDI (x7, x7, RANDIMM); ADDI (x7, x7, RANDIMM); ADDI (x7, x7, RANDIMM);
+        ADDI (x7, x7, RANDIMM); ADDI (x7, x7, RANDIMM); ADDI (x7, x7, RANDIMM);
+        ADDI (x7, x7, RANDIMM); ADDI (x7, x7, RANDIMM); ADDI (x7, x7, RANDIMM);
+        ADDI (x7, x7, RANDIMM); ADDI (x7, x7, RANDIMM); ADDI (x7, x7, RANDIMM);
+        ADDI (x7, x7, RANDIMM); ADDI (x7, x7, RANDIMM); ADDI (x7, x7, RANDIMM);
+        ADDI (x7, x7, RANDIMM); ADDI (x7, x7, RANDIMM); ADDI (x7, x7, RANDIMM);
+        ADDI (x7, x7, RANDIMM); ADDI (x7, x7, RANDIMM); ADDI (x7, x7, RANDIMM);
+
+
 # Undefine the local macro to prevent accidental use later.
 #undef ADDI
 #undef STORE_X31
@@ -107,8 +146,8 @@ _start:
 # Data section for storing test results.
 .section .data
 .align 3
-# Reserve space for 32 test results. The size of each result depends on
+# Reserve space for 140 test results. The size of each result depends on
 # the architecture's word length (__riscv_xlen).
 TEST_DATA_BEGIN:
-    .zero __riscv_xlen / 8 * 32
+    .zero __riscv_xlen / 8 * 140
 TEST_DATA_END:

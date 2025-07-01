@@ -51,12 +51,45 @@ fromhost: .word 0
         li      t0,     CODE;           \
         EXIT_R(t0);
 
-# PREPROCESSOR_RANDOM: A macro for generating a psudo-random number.
-#define PREPROCESSOR_RANDOM ((((((((((((((((((((__LINE__ * __LINE__ * __LINE__) \
-        * __LINE__ / 3) * __LINE__ / 5) * __LINE__ / 7) * __LINE__ / 11)        \
-        * __LINE__ / 13) * __LINE__ / 17) * __LINE__ / 19) * __LINE__ / 23)     \
-        * __LINE__ / 29) * __LINE__ / 31) * __LINE__ / 37) * __LINE__ / 41)     \
-        * __LINE__ ) * __LINE__ ) * __LINE__ ) * __LINE__ ) * __LINE__ )        \
-        * __LINE__ ) * __LINE__ )
+#-----------------------------------------------------------------------
+# Pseudo-Random Number Generation Macros
+#-----------------------------------------------------------------------
+# These macros generate pseudo-random numbers at assembly time. This is
+# useful for creating varied test patterns without requiring a runtime
+# random number generator. The randomness is based on the preprocessor
+# directives `__LINE__` and `__COUNTER__`, so the generated values are
+# deterministic for a given compilation but vary based on where the
+# macro is invoked in the code.
+
+# RAND8: Generates a pseudo-random 8-bit value.
+#define RAND8 (((__LINE__ * 255) *      \
+        ((__COUNTER__ % 31) * 255))     \
+        & 0x0FF)
+
+# RAND16: Generates a pseudo-random 16-bit value by concatenating two
+# different 8-bit random values.
+#define RAND16 (RAND8 << 8 | RAND8)
+
+# RAND32: Generates a pseudo-random 32-bit value by concatenating two
+# different 16-bit random values.
+#define RAND32 (RAND16 << 16 | RAND16)
+
+# RAND64: Generates a pseudo-random 64-bit value by concatenating two
+# different 32-bit random values.
+#define RAND64 (RAND32 << 32 | RAND32)
+
+# RANDIMM: Generates a pseudo-random 12-bit immediate value suitable for
+# I-type instructions. It uses the `%lo` assembler relocation function
+# to extract the lower 12 bits of a 16-bit random number.
+#define RANDIMM (%lo(RAND16))
+
+# RAND: A convenience macro that generates a random number with a width
+# matching the architecture's native register size (XLEN). It resolves to
+# RAND64 on RV64 and RAND32 on RV32.
+#if __riscv_xlen == 64
+  #define RAND RAND64
+#else
+  #define RAND RAND32
+#endif
 
 #endif
