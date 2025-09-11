@@ -4,6 +4,12 @@
 
 ENTRY(_start)
 
+PHDRS
+{
+  text PT_LOAD FLAGS(5);
+  data PT_LOAD FLAGS(6);
+}
+
 MEMORY
 {
   /* Spike default RAM starts at 0x800000000 */
@@ -24,7 +30,7 @@ SECTIONS
     *(.rodata .rodata.*)
     . = ALIGN(4);
     _etext = .;        /* End of code/rodata */
-  } > RAM
+  } > RAM :text
 
   /* Initialized data section. */
   .data :
@@ -34,7 +40,7 @@ SECTIONS
     *(.data .data.*)
     . = ALIGN(4);
     _edata = .;        /* End of data */
-  } > RAM
+  } > RAM :data
 
   /* Uninitialized data section. */
   .bss :
@@ -45,7 +51,7 @@ SECTIONS
     *(COMMON)
     . = ALIGN(4);
     _ebss = .;         /* End of bss */
-  } > RAM
+  } > RAM :data
 
   _end = .;            /* End of program */
 
