@@ -1,0 +1,19 @@
+name: Run Regression Tests
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  regression:
+    runs-on: [make, spike]
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Simulate
+      shell: bash
+      run: |
+        bash ./regression.sh

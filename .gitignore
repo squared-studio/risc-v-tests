@@ -1,2 +1,6 @@
+<<<<<<< HEAD
 build/*
 linker.x
+=======
+temp_*
+>>>>>>> bdedc1de6f4186c33f706bb212726d99917deb85
