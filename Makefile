@@ -1,80 +1,66 @@
-<<<<<<< HEAD
-INST_BASE ?= 0000000020000000
-DATA_BASE ?= 0000000040000000
+# ==============================================================================
+# RISC-V Test Build System
+# ==============================================================================
+# This Makefile provides targets for building and running RISC-V tests using
+# the Spike simulator and RISC-V GCC toolchain.
+# ==============================================================================
 
-CLEAN_TARGET += $(shell find $(realpath .) -name "*.dump")
-CLEAN_TARGET += $(shell find $(realpath .) -name "*.elf")
-CLEAN_TARGET += $(shell find $(realpath .) -name "*.hex")
-CLEAN_TARGET += $(shell find $(realpath .) -name "*.o")
-CLEAN_TARGET += $(shell find $(realpath .) -name "*.sym")
-CLEAN_TARGET += $(shell find $(realpath .) -name "linker.x")
-
-BUILD_PATH = build/$(TEST)
-
-CFLAGS += -Os
-# CFLAGS += -g3
-CFLAGS += -Wall
-CFLAGS += -Wextra
-CFLAGS += -Wa,-als,-al
-CFLAGS += -mno-save-restore
-CFLAGS += -ffunction-sections
-CFLAGS += -fdata-sections
-CFLAGS += -ffreestanding
-
-.PHONY: build
-build: update_linker build/prints.o build/startup.o
-	@mkdir -p $(BUILD_PATH)
-	@riscv64-unknown-elf-gcc -march=rv64g $(CFLAGS) -c -o $(BUILD_PATH)/$(TEST).o src/$(TEST)
-	@riscv64-unknown-elf-gcc -march=rv64g -nostdlib -nostartfiles -Tlinker.x -o $(BUILD_PATH)/$(TEST).elf $(BUILD_PATH)/$(TEST).o build/prints.o build/startup.o
-	@riscv64-unknown-elf-objcopy -O verilog $(BUILD_PATH)/$(TEST).elf $(BUILD_PATH)/$(TEST).hex
-	@riscv64-unknown-elf-nm $(BUILD_PATH)/$(TEST).elf > $(BUILD_PATH)/$(TEST).sym
-	@riscv64-unknown-elf-objdump -d $(BUILD_PATH)/$(TEST).elf > $(BUILD_PATH)/$(TEST).dump
-
-build/prints.o: prints.c
-	@mkdir -p build
-	@riscv64-unknown-elf-gcc -march=rv64g $(CFLAGS) -c -o build/prints.o prints.c
-
-build/startup.o: startup.s
-	@mkdir -p build
-	@riscv64-unknown-elf-gcc -march=rv64g $(CFLAGS) -c -o build/startup.o startup.s
-
-.PHONY: clean
-clean:
-	@$(foreach word, $(CLEAN_TARGET), echo "removing $(word)";)
-	@rm -rf $(CLEAN_TARGET)
-	@mkdir -p ./build
-	@find ./build -type "d" -empty -delete
-
-.PHONY: update_linker
-update_linker:
-	@cat linker.base \
-	  | sed "s/^INST_BASE = 0x.*;/INST_BASE = 0x$(INST_BASE);/g" \
-	  | sed "s/^DATA_BASE = 0x.*;/DATA_BASE = 0x$(DATA_BASE);/g" \
-	  > linker.x
-	
-.PHONY: all
-all:
-	@make clean
-	@rm -rf build
-	@$(foreach file, $(shell find $(realpath ./src) -name "*.s" -o -name "*.c"), make build TEST=$(shell basename $(file));)
-=======
+# Use bash as the shell for all commands
 SHELL := /bin/bash
 
+# Default target when 'make' is run without arguments
 .DEFAULT_GOAL := help
 
+# ==============================================================================
+# Configuration Variables
+# ==============================================================================
+
+# Debug mode flag: Set to 1 to enable Spike's interactive debug mode
 DEBUG ?= 0
 
+# Target RISC-V architecture (e.g., rv32i, rv32g, rv64i, rv64g)
 MARCH ?= rv64g
 
+# Target ABI (Application Binary Interface)
+# Common values: ilp32 (32-bit), lp64 (64-bit)
 MABI ?= lp64
 
+# Spike simulator flags configuration
+# Enable logging and commit tracking
 SPIKE_FLAGS += -l --log-commits
 ifeq ($(DEBUG), 1)
+	# Add debug flag for interactive mode
 	SPIKE_FLAGS += -d
-	LOG_FLASG :=
+	# Empty - no output redirection in debug mode
+	LOG_FLAGS :=
 else
-	LOG_FLASG := 2>&1 | tee build/${TEST}/spike
+	# Redirect output to both terminal and spike log file
+	LOG_FLAGS := 2>&1 | tee build/${TEST}/spike
 endif
+
+# ==============================================================================
+# Toolchain Configuration
+# ==============================================================================
+
+# RISC-V GCC compiler
+RISCV64_GCC ?= riscv64-unknown-elf-gcc
+
+# Object file copy utility (for creating hex files from ELF)
+RISCV64_OBJCOPY ?= riscv64-unknown-elf-objcopy
+
+# Symbol table utility
+RISCV64_NM ?= riscv64-unknown-elf-nm
+
+# Disassembler utility
+RISCV64_OBJDUMP ?= riscv64-unknown-elf-objdump
+
+# Spike RISC-V ISA simulator
+SPIKE ?= spike
+
+# ==============================================================================
+# Target: help
+# ==============================================================================
+# Displays usage information including available targets and variables
 
 .PHONY: help
 help: logo
@@ -92,17 +78,38 @@ help: logo
 	@echo -e "\033[1;33m  DEBUG :\033[0m Set to 1 to enable Spike's interactive debug mode. Default: 0."
 	@echo ""
 
+# ==============================================================================
+# Target: build
+# ==============================================================================
+# Creates the build directory structure for test artifacts
+
 build:
 	@echo -e -n "\033[3;35mCreating build directory... \033[0m"
 	@mkdir -p build
 	@echo "*" > build/.gitignore
 	@echo -e "\033[3;32mDone!\033[0m"
 
+# ==============================================================================
+# Target: clean
+# ==============================================================================
+# Removes all build artifacts and temporary files
+
 .PHONY: clean
 clean:
 	@echo -e -n "\033[3;35mCleaning build... \033[0m"
 	@rm -rf build temp_regression_issues
 	@echo -e "\033[3;32mDone!\033[0m"
+
+# ==============================================================================
+# Target: test
+# ==============================================================================
+# Compiles a RISC-V test program and generates various output files:
+#   - elf: The executable ELF binary
+#   - hex: Verilog-compatible hex format for hardware simulation
+#   - sym: Symbol table for debugging
+#   - dump: Disassembly listing
+#   - log: Compilation log
+# Requires: TEST variable pointing to the test source file
 
 .PHONY: test
 test: build
@@ -111,36 +118,75 @@ test: build
 	@echo -e "\033[1;35mBuilding test... \033[0m"
 	@rm -rf build/${TEST}
 	@mkdir -p build/${TEST}
+	# Compile the test with RISC-V GCC (no standard library, bare metal)
 	@${RISCV64_GCC} -march=$(MARCH) -mabi=$(MABI) -nostdlib -nostartfiles -I include -o build/${TEST}/elf ${TEST} -T spike.ld 2>&1 | tee build/${TEST}/log
+	# Convert ELF to Verilog hex format for hardware simulation
 	@${RISCV64_OBJCOPY} -O verilog build/${TEST}/elf build/${TEST}/hex
+	# Extract symbol table for debugging
 	@${RISCV64_NM} build/${TEST}/elf > build/${TEST}/sym
+	# Generate disassembly listing
 	@${RISCV64_OBJDUMP} -d build/${TEST}/elf > build/${TEST}/dump
 	@echo -e "\033[1;35mBuild test complete!\033[0m"
 
+# ==============================================================================
+# Target: code
+# ==============================================================================
+# Opens a test file in VS Code. If the file doesn't exist, creates it from
+# a template with auto-populated author and copyright information.
+# Requires: TEST variable pointing to the desired test file path
+
 .PHONY: code
 code:
+	# Check if test file exists; if not, create from template
 	@if [ ! -f $(TEST) ]; then \
 		mkdir -p $(shell echo "${TEST}" | sed "s/\/[^\/]*$$//g"); \
 		cp .github/template.s ${TEST}; \
 		sed -i "s/#  Author: Name (email)/#  Author: $(shell git config user.name) ($(shell git config user.email))/g" ${TEST}; \
 		sed -i "s/#  Copyright (c) YYYY squared-studio/#  Copyright (c) $(shell date +%Y) squared-studio/g" ${TEST}; \
 	fi
+	# Open the test file in VS Code
 	@code ${TEST}
+
+# ==============================================================================
+# Target: spike
+# ==============================================================================
+# Builds and runs a test on the Spike RISC-V ISA simulator, then processes
+# the output to extract memory write operations and test data.
+# Steps:
+#   1. Build the test
+#   2. Display symbol table
+#   3. Run on Spike simulator
+#   4. Extract memory writes and test data
+#   5. Copy results to test_data directory
+# Requires: TEST variable pointing to the test source file
 
 .PHONY: spike
 spike:
+	# Build the test first
 	@make -s test TEST=${TEST}
+	# Display the symbol table
 	@cat build/${TEST}/sym
 	@echo -e "\033[1;35mRunning spike... \033[0m"
-	@${SPIKE} ${SPIKE_FLAGS} --isa=$(MARCH) --pc=0x800000000 -m0x800000000:0x8000000 build/${TEST}/elf ${LOG_FLASG}
+	# Run the test on Spike simulator with configured flags
+	@${SPIKE} ${SPIKE_FLAGS} --isa=$(MARCH) --pc=0x800000000 -m0x800000000:0x8000000 build/${TEST}/elf ${LOG_FLAGS}
 	@echo -e "\033[1;35mspike run complete!\033[0m"
+	# Append spike output to compilation log
 	@cat build/${TEST}/spike >> build/${TEST}/log || echo -n ""
+	# Extract memory write operations from spike output
 	@cat build/${TEST}/spike | grep ") mem 0x" | sed "s/.*mem 0x/@/g"> build/${TEST}/mem_writes || echo -n ""
+	# Run Python script to extract test data
 	@python ./test_data_extract.py -t ${TEST}
+	# Clean up temporary spike output file
 	@rm -rf build/${TEST}/spike
+	# Copy test data to the test_data directory
 	@mkdir -p test_data/${TEST}
 	@cp -f build/${TEST}/test_data test_data/${TEST}/${MARCH} || echo -e "\033[1;31mbuild/${TEST}/test_data does not exist\033[0m"
 
+
+# ==============================================================================
+# Target: logo
+# ==============================================================================
+# Displays the squared-studio ASCII art logo with the current year
 
 .PHONY: logo
 logo:
@@ -152,4 +198,3 @@ logo:
 	@echo -e "\033[1;36m        |_|                                                2023-$(shell date +%Y)\033[0m\n"
 
 # > /dev/null 2>&1
->>>>>>> bdedc1de6f4186c33f706bb212726d99917deb85
